@@ -75,6 +75,12 @@ zinit light zdharma/history-search-multi-word
 # alias
 # ----------------------------
 alias cat=bat
+alias so="source"
+alias le="less"
+alias la="exa -a"
+alias ls="exa"
+alias ll="exa -l"
+alias lla="exa -la"
 
 alias g="git"
 alias gra="git remote add"
@@ -90,6 +96,8 @@ alias grc="git rebase --continue"
 alias gco="git checkout"
 alias gbc="git checkout -b"
 
+alias be="bundle exec"
+alias bi="bundle install"
 alias r="bin/rails"
 alias rs="bin/rails server"
 alias rc="bin/rails console"
