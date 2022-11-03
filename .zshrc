@@ -1,8 +1,15 @@
-#################################  HISTORY  #################################
-# history
-HISTFILE=$HOME/.zsh-history # 履歴を保存するファイル
-HISTSIZE=100000             # メモリ上に保存する履歴のサイズ
-SAVEHIST=1000000            # 上述のファイルに保存する履歴のサイズ
+typeset -U path PATH
+path=(
+  /opt/homebrew/bin(N-/)
+  /opt/homebrew/sbin(N-/)
+  /usr/bin
+  /usr/sbin
+  /bin
+  /sbin
+  /usr/local/bin(N-/)
+  /usr/local/sbin(N-/)
+  /Library/Apple/usr/bin
+)
 
 # share .zshhistory
 setopt inc_append_history   # 実行時に履歴をファイルにに追加していく
@@ -29,3 +36,65 @@ setopt auto_cd
 
 # disable ctrl+s, ctrl+q
 setopt no_flow_control
+
+# ----------------------------
+# basic
+# ----------------------------
+# コマンド履歴の管理
+HISTFILE=~/.zsh_history
+export HISTSIZE=1000
+export SAVEHIST=10000
+
+# ----------------------------
+# Added by Zinit's installer
+# ----------------------------
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# ----------------------------
+# Zinit plugins
+# ----------------------------
+# シンタックスハイライト
+zinit light zsh-users/zsh-syntax-highlighting
+# 入力補完
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+# コマンド履歴を検索
+zinit light zdharma/history-search-multi-word
+
+# ----------------------------
+# alias
+# ----------------------------
+alias cat=bat
+
+alias g="git"
+alias gra="git remote add"
+alias gb="git branch"
+alias gfm="git pull"
+alias gfr="git pull --rebase"
+alias gp="git push"
+alias gpc="git push -u origin HEAD"
+alias gs="git stash"
+alias gsp="git stash pop"
+alias gr="git rebase"
+alias grc="git rebase --continue"
+alias gco="git checkout"
+alias gbc="git checkout -b"
+
+alias r="bin/rails"
+alias rs="bin/rails server"
+alias rc="bin/rails console"
+alias rg="bin/rails generate"
+alias rdbc="bin/rails db:create"
+alias rdbm="bin/rails db:migrate"
+
+eval "$(starship init zsh)"
