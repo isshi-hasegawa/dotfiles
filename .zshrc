@@ -98,3 +98,4 @@ alias rdbc="bin/rails db:create"
 alias rdbm="bin/rails db:migrate"
 
 eval "$(starship init zsh)"
+eval "$(nodenv init -)"

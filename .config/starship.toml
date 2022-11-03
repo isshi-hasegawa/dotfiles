@@ -30,4 +30,3 @@ discharging_symbol = "😨"
 [time]
 #時間の表示をオンにして12時間表示に
 disabled = false
-use_12hr = true
