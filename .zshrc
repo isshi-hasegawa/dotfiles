@@ -77,8 +77,8 @@ zinit light zdharma/history-search-multi-word
 alias cat=bat
 alias so="source"
 alias le="less"
+alias l="exa"
 alias la="exa -a"
-alias ls="exa"
 alias ll="exa -l"
 alias lla="exa -la"
 
