@@ -107,3 +107,15 @@ alias rdbm="bin/rails db:migrate"
 
 eval "$(starship init zsh)"
 eval "$(nodenv init -)"
+
+# peco
+function peco-src () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^]' peco-src
