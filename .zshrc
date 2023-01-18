@@ -121,3 +121,5 @@ function peco-src () {
 }
 zle -N peco-src
 bindkey '^]' peco-src
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
