@@ -1,116 +1,32 @@
-typeset -U path PATH
-path=(
-  /opt/homebrew/bin(N-/)
-  /opt/homebrew/sbin(N-/)
-  /usr/bin
-  /usr/sbin
-  /bin
-  /sbin
-  /usr/local/bin(N-/)
-  /usr/local/sbin(N-/)
-  /Library/Apple/usr/bin
-)
-
-# share .zshhistory
-setopt inc_append_history   # 実行時に履歴をファイルにに追加していく
-setopt share_history        # 履歴を他のシェルとリアルタイム共有する
-
-#################################  COMPLEMENT  #################################
-# enable completion
-autoload -Uz compinit && compinit
-
-# 補完候補をそのまま探す -> 小文字を大文字に変えて探す -> 大文字を小文字に変えて探す
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
-
-### 補完方法毎にグループ化する。
-zstyle ':completion:*' format '%B%F{blue}%d%f%b'
-zstyle ':completion:*' group-name ''
-
-
-### 補完侯補をメニューから選択する。
-### select=2: 補完候補を一覧から選択する。補完候補が2つ以上なければすぐに補完する。
-zstyle ':completion:*:default' menu select=2
-#################################  OTHERS  #################################
-# automatically change directory when dir name is typed
-setopt auto_cd
-
-# disable ctrl+s, ctrl+q
-setopt no_flow_control
-
-# ----------------------------
-# basic
-# ----------------------------
-# コマンド履歴の管理
-HISTFILE=~/.zsh_history
-export HISTSIZE=1000
-export SAVEHIST=10000
-
-# ----------------------------
-# Added by Zinit's installer
-# ----------------------------
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-# ----------------------------
-# Zinit plugins
-# ----------------------------
-# シンタックスハイライト
-zinit light zsh-users/zsh-syntax-highlighting
-# 入力補完
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
-# コマンド履歴を検索
-zinit light zdharma/history-search-multi-word
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
-# ----------------------------
-# alias
-# ----------------------------
-alias cat=bat
-alias so="source"
-alias le="less"
-alias l="exa"
-alias la="exa -a"
-alias ll="exa -l"
-alias lla="exa -la"
+# Homebrew
+export PATH=/usr/local/bin:$PATH
 
-alias g="git"
-alias gra="git remote add"
-alias gb="git branch"
-alias gfm="git pull"
-alias gfr="git pull --rebase"
-alias gp="git push"
-alias gpc="git push -u origin HEAD"
-alias gs="git stash"
-alias gsd="git stash drop"
-alias gsp="git stash pop"
-alias gr="git rebase"
-alias gra="git rebase --abort"
-alias grc="git rebase --continue"
-alias gco="git checkout"
-alias gbc="git checkout -b"
+# mise
+eval "$(mise activate zsh)"
 
-alias be="bundle exec"
-alias bi="bundle install"
-alias r="bin/rails"
-alias rs="bin/rails server"
-alias rc="bin/rails console"
-alias rg="bin/rails generate"
-alias rdbc="bin/rails db:create"
-alias rdbm="bin/rails db:migrate"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-eval "$(starship init zsh)"
-eval "$(nodenv init -)"
-
-# peco
+# ctrl + ]でghqの管理化にあるリポジトリを一覧表示する
 function peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
@@ -122,4 +38,19 @@ function peco-src () {
 zle -N peco-src
 bindkey '^]' peco-src
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+# historyをpeco表示する
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
