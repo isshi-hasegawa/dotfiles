@@ -1,0 +1,23 @@
+# Git自身のディレクトリ
+.git/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ローカル設定（機密情報を含む可能性のあるファイル）
+*.local
+.env
+.env.local
+
+# バックアップファイル
+*.bak
+*.backup
+*~
+
+# エディタ設定
+.vscode/
+.idea/
+*.swp
+*.swo
