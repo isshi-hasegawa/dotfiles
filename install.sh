@@ -18,19 +18,19 @@ echo "🔗 シンボリックリンクを作成します..."
 for dotfile in .??*; do
     # 除外パターンのチェック
     [[ $dotfile =~ $IGNORE_PATTERN ]] && continue
-    
+
     # install.shとREADME.mdはスキップ
     [[ "$dotfile" == ".gitignore" ]] && continue
-    
+
     source_file="$DOTFILES_DIR/$dotfile"
     target_file="$HOME/$dotfile"
-    
+
     # 既存ファイルのバックアップ
     if [ -e "$target_file" ] && [ ! -L "$target_file" ]; then
         echo "  📦 バックアップ: $dotfile"
         mv "$target_file" "$BACKUP_DIR/"
     fi
-    
+
     # シンボリックリンクの作成
     ln -snfv "$source_file" "$target_file"
 done
