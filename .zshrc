@@ -54,3 +54,14 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"
+
+# pnpm
+export PNPM_HOME="/Users/hasegawamasashi/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
