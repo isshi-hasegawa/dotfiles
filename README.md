@@ -4,23 +4,21 @@ macOS向けの最小限の設定です。zshの履歴保存・検索と、履歴
 
 ## 管理する設定
 
-- `.zshenv`: 全zsh共通のPATH。Homebrew、pnpm、Docker、miseのshims、Vite+、Claude Codeの環境ファイルの場所
+- `.zshenv`: 全zsh共通のPATH。Homebrew、pnpm、Docker、Supabase CLI、Vite+、Claude Codeの環境ファイルの場所
 - `.zprofile`: ログイン時のブラウザ、エディタ、ページャー、言語
-- `.zshrc`: 履歴、入力予測、対話シェルでのmise初期化
-- `.bash_profile`: bash用のDocker PATHとmise初期化
-- `.default-npm-packages`: miseでNode.jsを導入するときのグローバルパッケージ
+- `.zshrc`: 履歴、入力予測
+- `.bash_profile`: bash用のDocker・Supabase・JavaScript環境
 - `.config/git/ignore`: グローバルGit ignore
 - `.config/karabiner/`: キーボード設定
 
 Prezto、Powerlevel10k、Starship、pecoによる検索は使いません。
 Ruby／Rails・tmuxのシェル設定とElixirのバージョン指定も削除しています。
-ツール本体のアンインストールは行いません。
 `CLAUDE_ENV_FILE`は `$HOME/.claude_env.sh` を指し、内容はリポジトリに含めません。
 
 ## セットアップ
 
 ```sh
-brew install mise git zsh-autosuggestions
+brew install git zsh-autosuggestions
 git clone https://github.com/isshi-hasegawa/dotfiles.git ~/src/github.com/isshi-hasegawa/dotfiles
 cd ~/src/github.com/isshi-hasegawa/dotfiles
 ./install.sh
@@ -31,10 +29,13 @@ exec zsh -l
 シェルだけを適用する場合は、既存設定をバックアップして `.zshenv`、`.zprofile`、`.zshrc` のみリンクしてください。
 以前のPrezto設定から移行する場合は、Preztoを参照する `~/.zlogin` と `~/.zlogout` もバックアップして外してください。
 
-Node.jsなどのバージョンはmiseで指定します。
+Node.jsとJavaScriptの依存関係はVite+で管理します。pnpmは現在の専用インストールを利用します。
+Supabase CLIは公式インストーラーで `~/.supabase/bin` に導入します。
+HomebrewはGit・GitHub CLI・入力予測などの共通ツールに利用し、miseは使いません。
 
 ```sh
-mise use -g node@lts
+curl -fsSL https://raw.githubusercontent.com/supabase/cli/main/install -o /tmp/supabase-install.sh
+bash /tmp/supabase-install.sh --no-modify-path
 ```
 
 ## 履歴と入力予測

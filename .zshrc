@@ -8,15 +8,6 @@ setopt EXTENDED_HISTORY SHARE_HISTORY HIST_IGNORE_DUPS HIST_SAVE_NO_DUPS
 bindkey -e
 bindkey '^R' history-incremental-search-backward
 
-# 対話シェルでmiseのバージョン切り替えを有効にする。
-if (( $+commands[mise] )); then
-  eval "$(mise activate zsh)"
-fi
-
-# mise初期化後も、従来のpnpm・Vite+の優先順を保つ。
-[[ ! -r "$HOME/.vite-plus/env" ]] || source "$HOME/.vite-plus/env"
-path=("$PNPM_HOME" $path)
-
 # Homebrew版の入力予測だけを読み込む。
 for autosuggestions_file in \
   "${HOMEBREW_PREFIX:-/usr/local}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
