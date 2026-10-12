@@ -30,6 +30,7 @@ exec zsh -l
 以前のPrezto設定から移行する場合は、Preztoを参照する `~/.zlogin` と `~/.zlogout` もバックアップして外してください。
 
 Node.jsとJavaScriptの依存関係はVite+で管理します。pnpmは現在の専用インストールを利用します。
+macOSのログイン処理後もVite+のNode.js・npmを優先します。古いグローバルnpmは使いません。
 Supabase CLIは公式インストーラーで `~/.supabase/bin` に導入します。
 HomebrewはGit・GitHub CLI・入力予測などの共通ツールに利用し、miseは使いません。
 

@@ -1,4 +1,8 @@
 # ログイン時の基本環境。
+# macOSのpath_helperが変更した優先順を、開発ツール優先に戻す。
+[[ ! -d "$HOME/.vite-plus/bin" ]] || path=("$HOME/.vite-plus/bin" $path)
+path=("$PNPM_HOME" $path)
+
 [[ "$OSTYPE" != darwin* ]] || export BROWSER='open'
 export EDITOR="${EDITOR:-nano}"
 export VISUAL="${VISUAL:-$EDITOR}"
