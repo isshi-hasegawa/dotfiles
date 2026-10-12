@@ -37,4 +37,4 @@ done
 
 [[ -z "$BACKUP_DIR" ]] || echo "既存設定のバックアップ: $BACKUP_DIR"
 echo "セットアップ完了。新しいシェルを起動してください: exec zsh -l"
-echo "必要なツール: brew install git zsh-autosuggestions"
+echo "必要なツール: brew install git zsh-autosuggestions supabase/tap/supabase"

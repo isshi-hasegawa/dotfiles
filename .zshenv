@@ -11,7 +11,6 @@ path=("$PNPM_HOME" $path)
 export PATH
 
 # 非対話シェルでも開発ツールを利用できるようにする。
-path=("$HOME/.supabase/bin" $path)
 [[ ! -r "$HOME/.vite-plus/env" ]] || source "$HOME/.vite-plus/env"
 path=("$PNPM_HOME" $path)
 export CLAUDE_ENV_FILE="$HOME/.claude_env.sh"

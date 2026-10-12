@@ -4,11 +4,7 @@ case ":$PATH:" in
   *) export PATH="$PATH:$HOME/.docker/bin" ;;
 esac
 
-# Supabase CLIとJavaScript環境
-case ":$PATH:" in
-  *":$HOME/.supabase/bin:"*) ;;
-  *) export PATH="$HOME/.supabase/bin:$PATH" ;;
-esac
+# JavaScript環境
 [[ ! -r "$HOME/.vite-plus/env" ]] || source "$HOME/.vite-plus/env"
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in

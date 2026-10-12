@@ -18,7 +18,7 @@ Ruby／Rails・tmuxのシェル設定とElixirのバージョン指定も削除�
 ## セットアップ
 
 ```sh
-brew install git zsh-autosuggestions
+brew install git zsh-autosuggestions supabase/tap/supabase
 git clone https://github.com/isshi-hasegawa/dotfiles.git ~/src/github.com/isshi-hasegawa/dotfiles
 cd ~/src/github.com/isshi-hasegawa/dotfiles
 ./install.sh
@@ -32,7 +32,7 @@ exec zsh -l
 
 Node.jsとJavaScriptの依存関係はVite+で管理します。pnpmは現在の専用インストールを利用します。
 macOSのログイン処理後もVite+のNode.js・npmを優先します。古いグローバルnpmは使いません。
-Supabase CLIは現在 `~/.supabase/bin` の単独インストールを利用します。
+Supabase CLIはHomebrewで管理します。更新は `brew upgrade supabase/tap/supabase` で行います。
 HomebrewはGit・GitHub CLI・入力予測などの共通ツールに利用し、miseは使いません。
 
 ## 履歴と入力予測
