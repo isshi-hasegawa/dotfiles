@@ -4,7 +4,7 @@ macOS向けの最小限の設定です。zshの履歴保存・検索と、履歴
 
 ## 管理する設定
 
-- `.zshenv`: 全zsh共通のPATH。Homebrew、pnpm、Docker、Supabase CLI、Vite+、Claude Codeの環境ファイルの場所
+- `.zshenv`: 全zsh共通のPATH。Homebrew、pnpm、Docker、Supabase CLI、Vite+
 - `.zprofile`: ログイン時のブラウザ、エディタ、ページャー、言語
 - `.zshrc`: 履歴、入力予測
 - `.bash_profile`: bash用のDocker・Supabase・JavaScript環境
@@ -13,7 +13,6 @@ macOS向けの最小限の設定です。zshの履歴保存・検索と、履歴
 
 Prezto、Powerlevel10k、Starship、pecoによる検索は使いません。
 Ruby／Rails・tmuxのシェル設定とElixirのバージョン指定も削除しています。
-`CLAUDE_ENV_FILE`は `$HOME/.claude_env.sh` を指し、内容はリポジトリに含めません。
 
 ## セットアップ
 
