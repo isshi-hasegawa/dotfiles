@@ -1,11 +1,17 @@
-#
-# Defines environment variables.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-# Ensure that a non-login, non-interactive shell has a defined environment.
-if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprofile"
+# コマンド検索パス。再読み込みしても重複させない。
+typeset -gU path
+if [[ -d /opt/homebrew/bin ]]; then
+  path=(/opt/homebrew/bin /opt/homebrew/sbin /usr/local/bin /usr/local/sbin $path)
+else
+  path=(/usr/local/bin /usr/local/sbin $path)
 fi
+export PNPM_HOME="$HOME/Library/pnpm"
+path=("$PNPM_HOME" $path)
+[[ ! -d "$HOME/.docker/bin" ]] || path+=("$HOME/.docker/bin")
+export PATH
+
+# 非対話シェルでも開発ツールを利用できるようにする。
+[[ ! -d "$HOME/.local/share/mise/shims" ]] || path=("$HOME/.local/share/mise/shims" $path)
+[[ ! -r "$HOME/.vite-plus/env" ]] || source "$HOME/.vite-plus/env"
+path=("$PNPM_HOME" $path)
+export CLAUDE_ENV_FILE="$HOME/.claude_env.sh"
