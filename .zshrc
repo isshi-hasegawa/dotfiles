@@ -5,63 +5,58 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# コマンド検索パス。再読み込みしても重複させない。
+typeset -gU path
+if [[ -d /opt/homebrew/bin ]]; then
+  path=(/opt/homebrew/bin /opt/homebrew/sbin /usr/local/bin /usr/local/sbin $path)
+else
+  path=(/usr/local/bin /usr/local/sbin $path)
+fi
+export PNPM_HOME="$HOME/Library/pnpm"
+path=("$PNPM_HOME" $path)
+[[ ! -d "$HOME/.docker/bin" ]] || path+=("$HOME/.docker/bin")
+export PATH
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Homebrew
-export PATH=/usr/local/bin:$PATH
+# 開発ツール（導入済みの場合のみ初期化）
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+fi
+[[ ! -r "$HOME/.vite-plus/env" ]] || source "$HOME/.vite-plus/env"
 
-# mise
-eval "$(mise activate zsh)"
+# Claude Codeの環境変数ファイル（内容はリポジトリに含めない）
+export CLAUDE_ENV_FILE="$HOME/.claude_env.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# ctrl + ]でghqの管理化にあるリポジトリを一覧表示する
-function peco-src () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
+# Ctrl+]：ghq管理のリポジトリを検索して移動
+function peco-src() {
+  local selected_dir
+  if selected_dir=$(ghq list -p | peco --query "$LBUFFER") && [[ -n "$selected_dir" ]]; then
+    BUFFER="cd -- ${(q)selected_dir}"
     zle accept-line
   fi
   zle clear-screen
 }
-zle -N peco-src
-bindkey '^]' peco-src
-
-# historyをpeco表示する
+# Ctrl+R：新しい順に履歴を検索
 function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(\history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
+  local selected_command
+  if selected_command=$(fc -rl -n 1 | peco --query "$LBUFFER") && [[ -n "$selected_command" ]]; then
+    BUFFER="$selected_command"
     CURSOR=$#BUFFER
-    zle clear-screen
+  fi
+  zle clear-screen
 }
-zle -N peco-select-history
-bindkey '^r' peco-select-history
-
-# Vite+ bin (https://viteplus.dev)
-. "$HOME/.vite-plus/env"
-
-# pnpm
-export PNPM_HOME="/Users/hasegawamasashi/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
+if (( $+commands[ghq] && $+commands[peco] )); then
+  zle -N peco-src
+  bindkey '^]' peco-src
+fi
+if (( $+commands[peco] )); then
+  zle -N peco-select-history
+  bindkey '^r' peco-select-history
+fi
