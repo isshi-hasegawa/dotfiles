@@ -13,11 +13,8 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'autosuggestions' \
   'git' \
-  'tmux' \
   'osx' \
   'homebrew' \
-  'rails' \
-  'ruby' \
   'ssh' \
   'prompt'
 zstyle ':prezto:module:editor' key-bindings 'emacs'

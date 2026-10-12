@@ -14,7 +14,6 @@
 - `.zshenv` - zsh環境変数
 - `.zpreztorc` - Prezto設定
 - `.p10k.zsh` - Powerlevel10k設定
-- `.tool-versions` - miseのデフォルトバージョン設定
 - `.bash_profile` - bash設定
 - `.default-npm-packages` - miseでNode.jsインストール時にグローバルインストールするパッケージ
 - `.config/` - アプリケーション設定ディレクトリ
@@ -119,6 +118,8 @@ unlink ~/.bash_profile
 - `.bash_profile`: bash用のDocker PATHとmise初期化
 
 mise、Vite+、ghq、pecoは導入されている場合だけ初期化します。
+Ruby／Rails・tmuxのPreztoモジュールと、未使用のElixirのバージョン指定は削除しています。
+言語のバージョンは必要に応じてmiseで指定してください。
 `Ctrl+]`は空白を含むリポジトリパスに対応し、`Ctrl+R`はzshの履歴を新しい順に検索します。
 検索をキャンセルした場合は入力中のコマンドを保ちます。
 `CLAUDE_ENV_FILE`は `$HOME/.claude_env.sh` を指します。ファイルの内容は管理対象外です。
