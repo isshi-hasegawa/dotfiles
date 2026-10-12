@@ -25,19 +25,15 @@ cd ~/src/github.com/isshi-hasegawa/dotfiles
 exec zsh -l
 ```
 
-`install.sh`は `.config` などもまとめてリンクします。既存の実ファイルはバックアップされます。
-シェルだけを適用する場合は、既存設定をバックアップして `.zshenv`、`.zprofile`、`.zshrc` のみリンクしてください。
+`install.sh`は管理対象のファイルだけをリンクし、`.config`全体を置き換えません。
+既存のファイル・リンクは必要なときだけバックアップし、すでに同じ設定なら何もしません。
+管理対象外のアプリ設定はそのまま残ります。
 以前のPrezto設定から移行する場合は、Preztoを参照する `~/.zlogin` と `~/.zlogout` もバックアップして外してください。
 
 Node.jsとJavaScriptの依存関係はVite+で管理します。pnpmは現在の専用インストールを利用します。
 macOSのログイン処理後もVite+のNode.js・npmを優先します。古いグローバルnpmは使いません。
-Supabase CLIは公式インストーラーで `~/.supabase/bin` に導入します。
+Supabase CLIは現在 `~/.supabase/bin` の単独インストールを利用します。
 HomebrewはGit・GitHub CLI・入力予測などの共通ツールに利用し、miseは使いません。
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/supabase/cli/main/install -o /tmp/supabase-install.sh
-bash /tmp/supabase-install.sh --no-modify-path
-```
 
 ## 履歴と入力予測
 
