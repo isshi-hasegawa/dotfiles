@@ -20,7 +20,6 @@
 - `.config/` - アプリケーション設定ディレクトリ
   - `git/ignore` - グローバルGit ignore設定
   - `karabiner/` - Karabinerキーボードカスタマイズ
-  - `starship.toml` - Starshipプロンプト設定
 
 ## セットアップ
 
@@ -51,7 +50,7 @@ cd ~/src/github.com/isshi-hasegawa/dotfiles
 ./install.sh
 
 # 設定を反映
-source ~/.zshrc
+exec zsh -l
 ```
 
 ### 3. miseでNode.jsをインストール
@@ -110,6 +109,25 @@ unlink ~/.bash_profile
 # または、バックアップから復元
 # install.sh実行時に作成されたバックアップディレクトリから復元できます
 ```
+
+## シェル設定の役割
+
+- `.zshrc`: PATH、開発ツールの初期化、プロンプト、検索ショートカット
+- `.zshenv`: 非ログインシェルで必要な場合に `.zprofile` を読み込む
+- `.zpreztorc`: Preztoの有効なモジュールとオプション
+- `.p10k.zsh`: Powerlevel10kの表示設定。プロンプトはこれに統一
+- `.bash_profile`: bash用のDocker PATHとmise初期化
+
+mise、Vite+、ghq、pecoは導入されている場合だけ初期化します。
+`Ctrl+]`は空白を含むリポジトリパスに対応し、`Ctrl+R`はzshの履歴を新しい順に検索します。
+検索をキャンセルした場合は入力中のコマンドを保ちます。
+`CLAUDE_ENV_FILE`は `$HOME/.claude_env.sh` を指します。ファイルの内容は管理対象外です。
+
+既存のMacでは、ホームの設定ファイルがPrezto配下にリンクされている場合があります。
+リポジトリの設定が使われているかは `ls -l ~/.zshrc ~/.zshenv ~/.zpreztorc ~/.p10k.zsh` で確認できます。
+`install.sh`は `.config` などもまとめて置き換えるため、zshの設定だけを反映する場合は、
+既存ファイルをバックアップして必要なファイルだけリンクしてください。
+`.zprofile`はこのリポジトリに含めていません。既存のPreztoのログイン設定を利用します。
 
 ## カスタマイズ
 
