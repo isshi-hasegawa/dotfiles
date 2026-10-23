@@ -7,7 +7,6 @@ else
 fi
 export PNPM_HOME="$HOME/Library/pnpm"
 path=("$PNPM_HOME" $path)
-[[ ! -d "$HOME/.docker/bin" ]] || path+=("$HOME/.docker/bin")
 export PATH
 
 # 非対話シェルでも開発ツールを利用できるようにする。
