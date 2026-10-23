@@ -4,10 +4,10 @@ macOS向けの最小限の設定です。zshの履歴保存・検索と、履歴
 
 ## 管理する設定
 
-- `.zshenv`: 全zsh共通のPATH。Homebrew、pnpm、Docker、Supabase CLI、Vite+
+- `.zshenv`: 全zsh共通のPATH。Homebrew、pnpm、Vite+
 - `.zprofile`: ログイン時のブラウザ、エディタ、ページャー、言語
 - `.zshrc`: 履歴、入力予測
-- `.bash_profile`: bash用のDocker・Supabase・JavaScript環境
+- `.bash_profile`: bash用のHomebrew・JavaScript環境
 - `.config/git/ignore`: グローバルGit ignore
 - `.config/karabiner/`: キーボード設定
 
@@ -17,7 +17,7 @@ Ruby／Rails・tmuxのシェル設定とElixirのバージョン指定も削除�
 ## セットアップ
 
 ```sh
-brew install git zsh-autosuggestions supabase/tap/supabase
+brew install git zsh-autosuggestions
 git clone https://github.com/isshi-hasegawa/dotfiles.git ~/src/github.com/isshi-hasegawa/dotfiles
 cd ~/src/github.com/isshi-hasegawa/dotfiles
 ./install.sh
@@ -31,7 +31,8 @@ exec zsh -l
 
 Node.jsとJavaScriptの依存関係はVite+で管理します。pnpmは現在の専用インストールを利用します。
 macOSのログイン処理後もVite+のNode.js・npmを優先します。古いグローバルnpmは使いません。
-Supabase CLIはHomebrewで管理します。更新は `brew upgrade supabase/tap/supabase` で行います。
+Apple Siliconでは `/opt/homebrew` のHomebrewをログイン時にも優先します。
+ログインシェルはmacOS標準の `/bin/zsh` を利用します。Docker Desktopは使いません。
 HomebrewはGit・GitHub CLI・入力予測などの共通ツールに利用し、miseは使いません。
 
 ## 履歴と入力予測
